@@ -3,13 +3,21 @@ const logger = require('./logger');
 
 const createTransporter = () => {
   const config = {
-    host: process.env.SMTP_HOST,
+    host: process.env.SMTP_HOST || 'smtp.gmail.com',
     port: parseInt(process.env.SMTP_PORT || '587', 10),
     secure: process.env.SMTP_PORT === '465',
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
     },
+    // Force IPv4 to avoid ENETUNREACH errors on IPv6-only or restricted environments
+    connectionTimeout: 10000, // 10 seconds
+    greetingTimeout: 10000,
+    socketTimeout: 10000,
+    tls: {
+      // Do not fail on invalid certs
+      rejectUnauthorized: false
+    }
   };
 
   if (!config.host || !config.auth.user || !config.auth.pass) {
@@ -17,7 +25,13 @@ const createTransporter = () => {
     return null;
   }
 
-  return nodemailer.createTransport(config);
+  // Option to prefer IPv4
+  return nodemailer.createTransport({
+    ...config,
+    host: config.host,
+    port: config.port,
+    family: 4 // Force IPv4
+  });
 };
 
 const sendEmail = async ({ to, subject, text, html }) => {
