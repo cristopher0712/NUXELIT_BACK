@@ -11,7 +11,7 @@ TU PERSONALIDAD:
 
 INFORMACIÓN DE LA EMPRESA:
 - Nombre: ${companyInfo.name || 'Nuxelit'}
-- Email de contacto: ${companyInfo.contact?.email || 'contacto@nuxelit.com'}
+- Email de contacto: ${companyInfo.contact?.email || 'teamnuxelit@gmail.com'}
 - WhatsApp: ${companyInfo.contact?.whatsapp || ''}
 
 REGLAS:
