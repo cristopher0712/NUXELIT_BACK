@@ -1,36 +1,48 @@
 const nodemailer = require('nodemailer');
+const logger = require('./logger');
 
 const createTransporter = () => {
-  return nodemailer.createTransport({
+  const config = {
     host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    secure: process.env.SMTP_PORT === '465', // true for 465, false for other ports (like 587)
+    port: parseInt(process.env.SMTP_PORT || '587', 10),
+    secure: process.env.SMTP_PORT === '465',
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
     },
-  });
+  };
+
+  if (!config.host || !config.auth.user || !config.auth.pass) {
+    logger.warn('[EmailService] Configuración SMTP incompleta. Los correos no se enviarán.');
+    return null;
+  }
+
+  return nodemailer.createTransport(config);
 };
 
 const sendEmail = async ({ to, subject, text, html }) => {
   try {
     const transporter = createTransporter();
     
+    if (!transporter) {
+      return null;
+    }
+
     const mailOptions = {
-      from: `"${process.env.SMTP_FROM_NAME}" <${process.env.SMTP_FROM_EMAIL}>`,
+      from: `"${process.env.SMTP_FROM_NAME || 'Nuxelit'}" <${process.env.SMTP_FROM_EMAIL}>`,
       to,
       subject,
       text,
       html
     };
 
+    logger.debug(`[EmailService] Intentando enviar correo a: ${to}`);
     const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent: %s', info.messageId);
+    logger.info(`[EmailService] Correo enviado exitosamente. ID: ${info.messageId}`);
     return info;
   } catch (error) {
-    console.error('Error sending email:', error);
-    // Returning true/false or throwing depending on if we want rigid failure
-    // For now we just log it so the main requests don't crash if SMTP is unconfigured.
+    logger.error(`[EmailService] Error al enviar correo: ${error.message}`);
+    logger.error(error.stack);
     return null;
   }
 };
@@ -38,3 +50,4 @@ const sendEmail = async ({ to, subject, text, html }) => {
 module.exports = {
   sendEmail
 };
+

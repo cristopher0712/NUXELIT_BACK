@@ -2,6 +2,7 @@ const Quote = require('./quote.model');
 const { getPaginationData } = require('../../utils/pagination');
 const { sendEmail } = require('../../utils/emailService');
 const { renderTemplate } = require('../../utils/templateService');
+const logger = require('../../utils/logger');
 
 const generateQuoteNumber = async () => {
   const year = new Date().getFullYear();
@@ -23,6 +24,7 @@ const generateQuoteNumber = async () => {
  * Runs async — a SMTP failure is logged but never blocks the API response.
  */
 const sendQuoteNotificationEmail = async (quote) => {
+  logger.info(`[QuoteService] Iniciando proceso de notificación para cotización: ${quote.quoteNumber}`);
   try {
     // Recipients: comma-separated list from env, fallback to NOTIFICATION_EMAIL
     const rawRecipients = process.env.QUOTE_NOTIFICATION_EMAILS || process.env.NOTIFICATION_EMAIL || '';
@@ -31,8 +33,10 @@ const sendQuoteNotificationEmail = async (quote) => {
       .map((e) => e.trim())
       .filter(Boolean);
 
+    logger.debug(`[QuoteService] Destinatarios configurados: ${recipients.join(', ')}`);
+
     if (recipients.length === 0) {
-      console.warn('[QuoteService] No notification recipients configured — skipping email.');
+      logger.warn('[QuoteService] No se encontraron destinatarios configurados — omitiendo envío de correo.');
       return;
     }
 
@@ -61,19 +65,26 @@ const sendQuoteNotificationEmail = async (quote) => {
       }
     };
 
-    const html = renderTemplate('cotizacion.html', templateData);
+    logger.debug('[QuoteService] Datos del template preparados:', templateData);
 
-    await sendEmail({
+    const html = renderTemplate('cotizacion.html', templateData);
+    logger.debug('[QuoteService] Template HTML renderizado exitosamente.');
+
+    const result = await sendEmail({
       to: recipients.join(', '),
       subject: `Nueva cotización ${quote.quoteNumber} — ${quote.client?.name || 'Cliente'}`,
       text: `Se recibió una nueva solicitud de cotización (${quote.quoteNumber}) de ${quote.client?.name}. Revisa el panel de administración.`,
       html
     });
 
-    console.log(`[QuoteService] Notification email sent to: ${recipients.join(', ')}`);
+    if (result) {
+      logger.info(`[QuoteService] Correo de notificación enviado exitosamente a: ${recipients.join(', ')}`);
+    } else {
+      logger.error('[QuoteService] El servicio de correo falló al enviar la notificación.');
+    }
   } catch (error) {
-    // Log but never throw — the quote was already saved successfully.
-    console.error('[QuoteService] Failed to send notification email:', error.message);
+    logger.error(`[QuoteService] Error crítico al procesar la notificación por correo: ${error.message}`);
+    logger.error(error.stack);
   }
 };
 
@@ -94,6 +105,7 @@ const createQuote = async (quoteData) => {
   dataToSave.quoteNumber = await generateQuoteNumber();
 
   const quote = await Quote.create(dataToSave);
+  logger.info(`[QuoteService] Cotización guardada en BD: ${quote.quoteNumber}`);
 
   // Fire-and-forget: enviar correo de notificación a los desarrolladores
   sendQuoteNotificationEmail(quote);
