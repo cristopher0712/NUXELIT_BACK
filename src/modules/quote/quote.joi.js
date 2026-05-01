@@ -6,10 +6,12 @@ const quoteSchema = Joi.object({
   projectDescription: Joi.string().max(5000).allow('', null).optional(),
   budget: Joi.string().allow('', null).optional(),
   timeline: Joi.string().allow('', null).optional(),
-  name: Joi.string().min(2).max(100).required(),
-  email: Joi.string().email().required(),
-  phone: Joi.string().allow('', null).optional(),
-  company: Joi.string().max(200).allow('', null).optional()
+  client: Joi.object({
+    name: Joi.string().min(2).max(100).required(),
+    email: Joi.string().email().required(),
+    phone: Joi.string().allow('', null).optional(),
+    company: Joi.string().max(200).allow('', null).optional()
+  }).required()
 });
 
 const quoteUpdateSchema = Joi.object({

@@ -84,10 +84,10 @@ const createQuote = async (quoteData) => {
     budget: quoteData.budget,
     timeline: quoteData.timeline,
     client: {
-      name: quoteData.name,
-      email: quoteData.email,
-      phone: quoteData.phone,
-      company: quoteData.company
+      name: quoteData.client?.name,
+      email: quoteData.client?.email,
+      phone: quoteData.client?.phone,
+      company: quoteData.client?.company
     }
   };
 
@@ -95,7 +95,7 @@ const createQuote = async (quoteData) => {
 
   const quote = await Quote.create(dataToSave);
 
-  // Fire-and-forget: send notification email to developers
+  // Fire-and-forget: enviar correo de notificación a los desarrolladores
   sendQuoteNotificationEmail(quote);
 
   return {
