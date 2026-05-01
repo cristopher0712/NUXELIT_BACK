@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nueva solicitud de cotización</title>
+</head>
+
+<body style="margin:0; padding:0; background:#070b16; font-family:Arial, Helvetica, sans-serif; color:#ffffff;">
+
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#070b16; padding:32px 16px;">
+        <tr>
+            <td align="center">
+
+                <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                    style="max-width:680px; background:#111827; border:1px solid #26344f; border-radius:24px; overflow:hidden;">
+
+                    <tr>
+                        <td style="padding:0; background:#0b1020;">
+                            <div style="height:180px; background:
+                radial-gradient(circle at 20% 20%, rgba(132, 82, 255, 0.55), transparent 34%),
+                radial-gradient(circle at 80% 10%, rgba(33, 163, 245, 0.45), transparent 32%),
+                radial-gradient(circle at 50% 100%, rgba(21, 181, 140, 0.35), transparent 36%),
+                linear-gradient(135deg, #111827 0%, #111329 45%, #07111f 100%);
+                position:relative;">
+
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                    <tr>
+                                        <td style="padding:28px 32px;">
+                                            <table cellpadding="0" cellspacing="0" border="0">
+                                                <tr>
+                                                    <td
+                                                        style="width:42px; height:42px; border-radius:12px; background:linear-gradient(135deg, #6d4dfc, #21a3f5); text-align:center; vertical-align:middle; font-weight:700; font-size:20px;">
+                                                        N
+                                                    </td>
+                                                    <td style="padding-left:12px;">
+                                                        <div
+                                                            style="font-size:22px; font-weight:800; letter-spacing:-0.4px; color:#ffffff;">
+                                                            Nuxelit
+                                                        </div>
+                                                        <div style="font-size:13px; color:#a7b4cc; margin-top:4px;">
+                                                            Nueva solicitud de cotización
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding:32px;">
+
+                            <div
+                                style="display:inline-block; padding:8px 14px; border-radius:999px; background:rgba(132, 82, 255, 0.14); border:1px solid rgba(132, 82, 255, 0.5); color:#a884ff; font-size:13px; font-weight:700;">
+                                Cotización {{quoteNumber}}
+                            </div>
+
+                            <h1 style="margin:22px 0 10px; font-size:28px; line-height:1.25; color:#ffffff;">
+                                {{client.name}} solicitó una cotización
+                            </h1>
+
+                            <p style="margin:0; font-size:15px; line-height:1.7; color:#a7b4cc;">
+                                Se recibió una nueva solicitud desde el formulario de servicios. Revisa los datos del
+                                proyecto y contacta al cliente.
+                            </p>
+
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:28px;">
+                                <tr>
+                                    <td
+                                        style="padding:18px; background:#171f33; border:1px solid #2b3958; border-radius:18px;">
+
+                                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                            <tr>
+                                                <td style="padding-bottom:14px;">
+                                                    <div
+                                                        style="font-size:13px; color:#8f9bb3; text-transform:uppercase; letter-spacing:0.8px; font-weight:700;">
+                                                        Servicio solicitado
+                                                    </div>
+                                                    <div
+                                                        style="font-size:18px; color:#ffffff; font-weight:800; margin-top:6px;">
+                                                        {{serviceType}}
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="padding:16px 0; border-top:1px solid #2b3958;">
+                                                    <div
+                                                        style="font-size:13px; color:#8f9bb3; text-transform:uppercase; letter-spacing:0.8px; font-weight:700;">
+                                                        Descripción del proyecto
+                                                    </div>
+                                                    <div
+                                                        style="font-size:15px; color:#dce4f2; line-height:1.7; margin-top:6px;">
+                                                        {{projectDescription}}
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="padding-top:16px; border-top:1px solid #2b3958;">
+                                                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                                        <tr>
+                                                            <td width="50%" style="padding-right:8px;">
+                                                                <div
+                                                                    style="font-size:13px; color:#8f9bb3; text-transform:uppercase; letter-spacing:0.8px; font-weight:700;">
+                                                                    Presupuesto
+                                                                </div>
+                                                                <div
+                                                                    style="font-size:16px; color:#ffffff; font-weight:800; margin-top:8px;">
+                                                                    {{budget}}
+                                                                </div>
+                                                            </td>
+
+                                                            <td width="50%" style="padding-left:8px;">
+                                                                <div
+                                                                    style="font-size:13px; color:#8f9bb3; text-transform:uppercase; letter-spacing:0.8px; font-weight:700;">
+                                                                    Tiempo estimado
+                                                                </div>
+                                                                <div
+                                                                    style="font-size:16px; color:#ffffff; font-weight:800; margin-top:8px;">
+                                                                    {{timeline}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:20px;">
+                                <tr>
+                                    <td
+                                        style="padding:18px; background:#101827; border:1px solid #2b3958; border-radius:18px;">
+
+                                        <div
+                                            style="font-size:13px; color:#8f9bb3; text-transform:uppercase; letter-spacing:0.8px; font-weight:700; margin-bottom:14px;">
+                                            Datos del cliente
+                                        </div>
+
+                                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                            <tr>
+                                                <td style="padding:10px 0; color:#8f9bb3; font-size:14px;">Nombre</td>
+                                                <td align="right"
+                                                    style="padding:10px 0; color:#ffffff; font-size:14px; font-weight:700;">
+                                                    {{client.name}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    style="padding:10px 0; color:#8f9bb3; font-size:14px; border-top:1px solid #26344f;">
+                                                    Correo</td>
+                                                <td align="right" style="padding:10px 0; border-top:1px solid #26344f;">
+                                                    <a href="mailto:{{client.email}}"
+                                                        style="color:#21a3f5; font-size:14px; font-weight:700; text-decoration:none;">
+                                                        {{client.email}}
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    style="padding:10px 0; color:#8f9bb3; font-size:14px; border-top:1px solid #26344f;">
+                                                    Teléfono</td>
+                                                <td align="right" style="padding:10px 0; border-top:1px solid #26344f;">
+                                                    <a href="tel:{{client.phone}}"
+                                                        style="color:#21a3f5; font-size:14px; font-weight:700; text-decoration:none;">
+                                                        {{client.phone}}
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    style="padding:10px 0; color:#8f9bb3; font-size:14px; border-top:1px solid #26344f;">
+                                                    Empresa</td>
+                                                <td align="right"
+                                                    style="padding:10px 0; color:#ffffff; font-size:14px; font-weight:700; border-top:1px solid #26344f;">
+                                                    {{client.company}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    style="padding:10px 0 0; color:#8f9bb3; font-size:14px; border-top:1px solid #26344f;">
+                                                    Estado</td>
+                                                <td align="right"
+                                                    style="padding:10px 0 0; border-top:1px solid #26344f;">
+                                                    <span
+                                                        style="display:inline-block; padding:6px 12px; border-radius:999px; background:rgba(245, 181, 64, 0.12); color:#f5b540; font-size:13px; font-weight:800;">
+                                                        {{statusLabel}}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:28px;">
+                                <tr>
+                                    <td align="center">
+                                        <a href="{{adminQuoteUrl}}"
+                                            style="display:inline-block; padding:15px 26px; border-radius:999px; background:linear-gradient(135deg, #6d4dfc, #21a3f5); color:#ffffff; font-size:15px; font-weight:800; text-decoration:none; box-shadow:0 12px 28px rgba(109, 77, 252, 0.35);">
+                                            Ver solicitud
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding:22px 32px; background:#0b1020; border-top:1px solid #26344f;">
+                            <div style="font-size:12px; line-height:1.6; color:#71809b; text-align:center;">
+                                Este correo fue generado desde el servicio de cotizaciones de Nuxelit.
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+</body>
+
+</html>
