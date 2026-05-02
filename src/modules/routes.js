@@ -12,6 +12,8 @@ const testimonialRoutes = require('./testimonial/routes');
 const quoteRoutes = require('./quote/routes');
 const chatbotRoutes = require('./chatbot/routes');
 const analyticsRoutes = require('./analytics/routes');
+const developerRoutes = require('./developer/routes');
+const projectRoutes = require('./project/routes');
 
 router.use('/admin', adminRoutes);
 router.use('/site-config', siteConfigRoutes);
@@ -24,5 +26,7 @@ router.use('/testimonials', testimonialRoutes);
 router.use('/quotes', quoteRoutes);
 router.use('/chatbot', chatbotRoutes);
 router.use('/analytics', analyticsRoutes);
+router.use('/developers', developerRoutes);
+router.use('/projects', projectRoutes);
 
 module.exports = router;
