@@ -16,6 +16,8 @@ const generateQuoteNumber = async () => {
   return `QT-${year}-${paddedSequence}`;
 };
 
+
+
 const createQuote = async (quoteData) => {
   const dataToSave = {
     serviceType: quoteData.serviceType,
@@ -42,7 +44,7 @@ const createQuote = async (quoteData) => {
 const getQuotes = async (query, pagination) => {
   const { page, limit, skip } = pagination;
   const filter = {};
-  
+
   if (query.status) filter.status = query.status;
   if (query.serviceType) filter.serviceType = query.serviceType;
 

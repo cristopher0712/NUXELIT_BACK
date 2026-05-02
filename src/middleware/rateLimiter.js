@@ -2,8 +2,8 @@ const rateLimit = require('express-rate-limit');
 
 // General rate limiter
 const general = rateLimit({
-  windowMs: process.env.RATE_LIMIT_WINDOW_MS || 60000,
-  max: process.env.RATE_LIMIT_MAX || 100,
+  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS, 10) || 60000,
+  max: parseInt(process.env.RATE_LIMIT_MAX, 10) || 100,
   message: {
     success: false,
     message: 'Demasiadas solicitudes desde esta IP, por favor intenta de nuevo más tarde.'
@@ -12,7 +12,7 @@ const general = rateLimit({
 
 // Contact and Quotes rate limiter (stricter)
 const strict = rateLimit({
-  windowMs: process.env.RATE_LIMIT_WINDOW_MS || 60000,
+  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS, 10) || 60000,
   max: 5,
   message: {
     success: false,
@@ -22,7 +22,7 @@ const strict = rateLimit({
 
 // Chatbot message rate limiter
 const chatbotMsg = rateLimit({
-  windowMs: process.env.RATE_LIMIT_WINDOW_MS || 60000,
+  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS, 10) || 60000,
   max: 20,
   message: {
     success: false,
@@ -32,7 +32,7 @@ const chatbotMsg = rateLimit({
 
 // Admin login rate limiter
 const adminLogin = rateLimit({
-  windowMs: process.env.RATE_LIMIT_WINDOW_MS || 60000,
+  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS, 10) || 60000,
   max: 5,
   message: {
     success: false,
@@ -42,7 +42,7 @@ const adminLogin = rateLimit({
 
 // Analytics rate limiter
 const analytics = rateLimit({
-  windowMs: process.env.RATE_LIMIT_WINDOW_MS || 60000,
+  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS, 10) || 60000,
   max: 60,
   message: {
     success: false,
