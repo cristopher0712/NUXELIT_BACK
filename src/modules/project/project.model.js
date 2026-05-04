@@ -30,8 +30,8 @@ const projectSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['EN_DISENO', 'EN_DESARROLLO', 'TESTING', 'ENTREGADO', 'EN_PAUSA', 'CANCELADO'],
-    default: 'EN_DISENO'
+    enum: ['PENDIENTE', 'EN_DISENO', 'EN_DESARROLLO', 'TESTING', 'ENTREGADO', 'EN_PAUSA', 'CANCELADO'],
+    default: 'PENDIENTE'
   },
   startDate: {
     type: Date,

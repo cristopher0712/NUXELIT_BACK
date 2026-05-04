@@ -16,18 +16,55 @@ const getDashboardStats = async () => {
   const thirtyDaysAgo = new Date();
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
   
-  const deliveredLast30DaysByType = {};
-  const activeProjectsByType = {};
+  const projectsByStatus = {
+    'PENDIENTE': 0,
+    'EN_DISENO': 0,
+    'EN_DESARROLLO': 0,
+    'TESTING': 0,
+    'ENTREGADO': 0,
+    'ENTREGADO_TARDE': 0,
+    'EN_RETRASO': 0,
+    'EN_PAUSA': 0,
+    'CANCELADO': 0
+  };
+  const projectsByType = {};
 
   allProjects.forEach(p => {
+    const now = new Date();
+    // Calculate custom status for charts
+    let customStatus = p.status;
+
+    if (p.status === 'ENTREGADO') {
+      if (p.actualDeliveryDate && p.expectedDeliveryDate && p.actualDeliveryDate > p.expectedDeliveryDate) {
+        customStatus = 'ENTREGADO_TARDE';
+      }
+    } else if (p.status !== 'CANCELADO' && p.status !== 'EN_PAUSA') {
+      if (p.expectedDeliveryDate && now > p.expectedDeliveryDate) {
+        customStatus = 'EN_RETRASO';
+      }
+    }
+
+    if (projectsByStatus[customStatus] !== undefined) {
+      projectsByStatus[customStatus]++;
+    } else {
+       // fallback if a status exists that is not in our keys
+       projectsByStatus[p.status] = (projectsByStatus[p.status] || 0) + 1;
+    }
+
+    // Count all projects by type
+    projectsByType[p.serviceType] = (projectsByType[p.serviceType] || 0) + 1;
+
+    // Financials (All Projects)
+    if (p.finances) {
+      totalPaid += (p.finances.amountPaid || 0);
+    }
+
     // Active check
     if (p.status !== 'ENTREGADO' && p.status !== 'CANCELADO') {
       activeProjects++;
-      activeProjectsByType[p.serviceType] = (activeProjectsByType[p.serviceType] || 0) + 1;
       
       if (p.finances) {
         totalAgreed += (p.finances.agreedPrice || 0);
-        totalPaid += (p.finances.amountPaid || 0);
       }
     }
 
@@ -54,11 +91,6 @@ const getDashboardStats = async () => {
         totalRating += p.satisfaction.clientRating;
         ratingCount++;
       }
-
-      // Delivered last 30 days
-      if (p.actualDeliveryDate && p.actualDeliveryDate >= thirtyDaysAgo) {
-        deliveredLast30DaysByType[p.serviceType] = (deliveredLast30DaysByType[p.serviceType] || 0) + 1;
-      }
     }
   });
 
@@ -73,11 +105,12 @@ const getDashboardStats = async () => {
   const totalPending = Math.max(0, totalAgreed - totalPaid);
 
   return {
+    totalProjects: allProjects.length,
     activeProjects,
-    deliveredLast30DaysByType,
-    activeProjectsByType,
+    projectsByStatus,
+    activeProjectsByType: projectsByType,
     financials: {
-      monthlyRevenue,
+      monthlyRevenue: totalPaid, // Repurposed as total generated revenue for all time
       activeAgreed: totalAgreed,
       activePaid: totalPaid,
       activePending: totalPending
