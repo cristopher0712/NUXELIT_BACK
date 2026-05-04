@@ -24,8 +24,9 @@ const options = {
 
 const transports = [new winston.transports.Console(options.console)];
 
-// Solo escribimos archivos en local, porque Vercel no permite crear carpetas (read-only filesystem)
-if (process.env.NODE_ENV !== 'production') {
+// Vercel inyecta siempre process.env.VERCEL="1".
+// Si estamos en Vercel, NUNCA habilitar logs en archivo por el Read-Only filesystem.
+if (!process.env.VERCEL && process.env.NODE_ENV !== 'production') {
   transports.push(new winston.transports.File(options.file));
 }
 
