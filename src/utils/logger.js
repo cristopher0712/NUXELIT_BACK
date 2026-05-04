@@ -22,12 +22,16 @@ const options = {
   },
 };
 
+const transports = [new winston.transports.Console(options.console)];
+
+// Solo escribimos archivos en local, porque Vercel no permite crear carpetas (read-only filesystem)
+if (process.env.NODE_ENV !== 'production') {
+  transports.push(new winston.transports.File(options.file));
+}
+
 const logger = winston.createLogger({
   levels: winston.config.npm.levels,
-  transports: [
-    new winston.transports.File(options.file),
-    new winston.transports.Console(options.console)
-  ],
+  transports: transports,
   exitOnError: false, // do not exit on handled exceptions
 });
 
