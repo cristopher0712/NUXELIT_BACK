@@ -4,7 +4,8 @@ const paymentSchema = new mongoose.Schema({
   amount: { type: Number, required: true },
   date: { type: Date, default: Date.now },
   method: { type: String, default: 'Transferencia' },
-  reference: { type: String }
+  reference: { type: String },
+  receiptUrl: { type: String }
 });
 
 const projectSchema = new mongoose.Schema({
