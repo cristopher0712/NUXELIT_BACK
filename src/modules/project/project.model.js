@@ -51,6 +51,13 @@ const projectSchema = new mongoose.Schema({
   },
   satisfaction: {
     clientRating: { type: Number, min: 1, max: 5 }
+  },
+  details: {
+    technologies: { type: String, default: 'No definidas' },
+    architecture: { type: String, default: 'No definida' },
+    serviceUrls: { type: String, default: 'Sin URLs asignadas' },
+    deployedAt: { type: String, default: 'No desplegado' },
+    notes: { type: String, default: 'Sin notas' }
   }
 }, {
   timestamps: true,
